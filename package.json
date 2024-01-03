@@ -1,0 +1,19 @@
+{
+  "name": "naughty_mail",
+  "version": "1.0.0",
+  "description": "UwU",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/floupette/naughty_mail.git"
+  },
+  "author": "Les Sissidents",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/floupette/naughty_mail/issues"
+  },
+  "homepage": "https://github.com/floupette/naughty_mail#readme"
+}
