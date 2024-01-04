@@ -1,0 +1,8 @@
+@host = http://localhost:8000  
+
+### Obtenir tous les utilisateurs (admin seulement)
+GET {{host}}/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NTk1NjljNzFjZTRlYzM5OTQwZTMxMWUiLCJpc19hZG1pbiI6dHJ1ZSwiaWF0IjoxNzA0MzY1MzQ1LCJleHAiOjE3MDQ0NTE3NDV9.kKXcgvwgqOJvaLfMZcRPANgKIMGYyt4H5DB9Pr2IpfY
+
+
+
