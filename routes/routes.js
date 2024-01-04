@@ -63,7 +63,7 @@ router.put('/users/:firm_name', authMiddleware, adminMiddleware, (req, res) => {
 
 // Route pour supprimer un utilisateur spécifique par son nom d'entreprise (admin seulement)
 router.delete('/users/:firm_name', authMiddleware, adminMiddleware, (req, res) => {
-    User.findOneAndRemove({ firm_name: req.params.firm_name })
+    User.findOneAndDelete({ firm_name: req.params.firm_name })
     .then(user => {
         if (!user) return res.status(404).json({ message: 'User not found' });
         res.json({ message: 'User deleted successfully' });
