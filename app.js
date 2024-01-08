@@ -1,51 +1,47 @@
 require('dotenv').config();
-const cookieParser = require('cookie-parser');
-const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
-const userRoutes = require('./routes/routes'); // Importez vos routes d'utilisateurs
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const path = require('path');
+
+// Importez vos middlewares et routes personnalisés
+const { authMiddleware, adminMiddleware } = require('./middlewares');
+const userRoutes = require('./routes/routes');
+const methodOverride = require('method-override');
 
 const app = express();
-// Définissez EJS comme moteur de vue
-app.set('view engine', 'ejs');
+const PORT = process.env.PORT || 8000;
 
-// Définissez le dossier où se trouvent vos fichiers EJS
+// Configuration de la base de données
+mongoose.connect('mongodb://localhost:27017/Nautimail')
+    .then(() => console.log('MongoDB Connected'))
+    .catch(err => console.error('MongoDB connection error:', err));
+
+// Configuration du moteur de vue EJS
+app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
-app.get('/login', (req, res) => {
-  res.render('login');
-});
+// Middlewares pour analyser le corps de la requête et les cookies
+app.use(express.json()); // Pour analyser le corps des requêtes en JSON
+app.use(bodyParser.urlencoded({ extended: true })); // Pour analyser les corps des requêtes URL-encodés (formulaires)
+app.use(cookieParser()); // Pour analyser les cookies
+app.use(methodOverride('_method'));
 
-app.get('/registerEnter', (req, res) => {
-  res.render('registerEnter');
-});
+// Routes statiques pour le rendu de pages spécifiques
+// Assurez-vous qu'il n'y a pas de conflit avec les routes dans routes/routes.js
+app.get('/login', (req, res) => res.render('login'));
+app.get('/registerEnter', (req, res) => res.render('registerEnter'));
+// app.get('/registerAdmin', (req, res) => res.render('registerAdmin')); // Décommentez si nécessaire
 
-// app.get('/registerAdmin', (req, res) => {
-//   res.render('registerAdmin');
-// });
-
-
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cookieParser()); // Utilisez le middleware cookieParser
-
-
-
-// Middleware pour parser le corps des requêtes en JSON
-app.use(express.json());
-
-// Connexion à MongoDB
- mongoose.connect('mongodb://localhost:27017/Nautimail')
-    .then(() => console.log('MongoDB Connected'))
-    .catch(err => console.error(err));
-
-// Utilisation des routes d'utilisateurs
+// Utilisation des routes définies dans routes/routes.js
 app.use(userRoutes);
 
-const PORT = process.env.PORT || 8000;
+// Démarrage du serveur
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
 
-module.exports = app; 
+module.exports = app;
+
 

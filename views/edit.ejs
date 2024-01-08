@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Éditer Utilisateur</title>
+</head>
+<body>
+    <h1>Édition de l'utilisateur : <%= user.firm_name %></h1>
+    <form action="/users/<%= user.firm_name %>" method="POST">
+        <!-- Assurez-vous d'avoir des champs pour toutes les informations que vous souhaitez pouvoir éditer -->
+        <label for="firm_name">Nom de l'entreprise :</label>
+        <input type="text" id="firm_name" name="firm_name" value="<%= user.firm_name %>" required>
+        
+        <!-- Ajoutez ici d'autres champs pour l'édition -->
+
+        <input type="hidden" name="_method" value="PUT"> <!-- Utilisé pour indiquer une requête PUT si vous utilisez method-override -->
+        <button type="submit">Sauvegarder les changements</button>
+    </form>
+
+    <button onclick="deleteUser('<%= user.firm_name %>')">Supprimer l'utilisateur</button>
+    
+
+    <a href="/admin_home">Retour au tableau de bord administrateur</a>
+</body>
+<script>
+    function deleteUser(firmName) {
+        if(confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) {
+            // Envoyer une requête DELETE au serveur
+            fetch('/users/' + encodeURIComponent(firmName), {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+                // Rediriger vers admin_home ou rafraîchir la page
+                window.location.href = '/admin_home';
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    }
+    </script>
+</html>
