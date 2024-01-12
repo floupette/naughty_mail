@@ -9,7 +9,9 @@ export default class Users extends BaseEntity {
     @Column()
     firm_name: string;
     @Column()
-    fisrt_name: string;
+    first_name: string;
+    @Column()
+    last_name: string;
     @Column()
     email: string;
     @Column()
