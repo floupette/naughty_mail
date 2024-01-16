@@ -58,6 +58,8 @@ router.put('/:id', async (req, res) => {
     if(!('email' in req.body)) return res.status(400).send('Missing "email" field');
     if(!('phone_number' in req.body)) return res.status(400).send('Missing "phone_number" field');
     if(!('password' in req.body)) return res.status(400).send('Missing "password" field');
+    if(!('is_admin' in req.body)) return res.status(400).send('Missing "is_admin" field');
+
 
     const user = await Users.findOne({
         where: { id: Number(req.params.id) }
@@ -70,6 +72,7 @@ router.put('/:id', async (req, res) => {
     user.email = req.body.email;
     user.phone_number = req.body.phone_number;
     user.password = req.body.password;
+    user.is_admin = req.body.is_admin;
   
     await user.save();
 
